@@ -1,0 +1,42 @@
+@import '/src/styles/colors.scss';
+
+.body {
+	width: 30%;
+	height: auto;
+	padding: 2rem 1rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 0;
+	gap: 1rem;
+}
+
+.icon {
+	height: 55%;
+	width: 35%;
+	color: $primary;
+	flex: 1 0;
+}
+
+.textField {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+
+	flex: 1 0;
+
+	.title {
+		font-size: xx-large;
+		font-weight: 600;
+	}
+
+	.text {
+		font-size: medium;
+		font-weight: 400;
+		text-align: center;
+		color: gray;
+	}
+}

@@ -1,0 +1,10 @@
+@import '/src/styles/colors.scss';
+
+.body {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	border: 5px solid $primary;
+	border-radius: 20px;
+}
