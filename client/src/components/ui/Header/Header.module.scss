@@ -1,0 +1,55 @@
+@import '/src/styles/colors.scss';
+
+.header {
+	position: relative;
+
+	width: 100%;
+	height: 6rem;
+	padding: 0px 2rem;
+
+	box-sizing: border-box;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.actions {
+	display: flex;
+	gap: 1rem;
+}
+
+.button {
+	font-size: 1rem;
+	font-weight: 700;
+	width: fit-content;
+	height: fit-content;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+}
+
+.button:hover {
+	cursor: pointer;
+	filter: brightness(115%);
+}
+
+.secondary {
+	border: 3px solid $primary;
+	background-color: $secondary;
+	color: $primary;
+}
+
+.primary {
+	border: 3px solid $primary;
+	background-color: $primary;
+	color: $secondary;
+}
+
+.logo {
+	position: absolute;
+	height: 90%;
+	left: 50%;
+	translate: (-50% 0);
+}
