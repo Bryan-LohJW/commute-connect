@@ -6,19 +6,27 @@ const Header = () => {
 		<header className={classes.header}>
 			<img src={logo} className={classes.logo} />
 			<div className={classes.actions}>
-				<button className={`${classes.button} ${classes.secondary}`}>
-					Connects Near You
+				<button
+					className={`${classes.button} ${classes['button-secondary']}`}
+				>
+					Connects near you
 				</button>
-				<button className={`${classes.button} ${classes.secondary}`}>
+				<button
+					className={`${classes.button} ${classes['button-secondary']}`}
+				>
 					About
 				</button>
 			</div>
 			<div className={classes.actions}>
-				<button className={`${classes.button} ${classes.secondary}`}>
-					Log In
+				<button
+					className={`${classes.button} ${classes['button-secondary']}`}
+				>
+					Log in
 				</button>
-				<button className={`${classes.button} ${classes.primary}`}>
-					Sign Up
+				<button
+					className={`${classes.button} ${classes['button-primary']}`}
+				>
+					Sign up
 				</button>
 			</div>
 		</header>
