@@ -1,7 +1,7 @@
 import { BsGithub } from 'react-icons/bs';
 import classes from './Footer.module.scss';
 
-const Footer = () => {
+export const Footer = () => {
 	const year = () => {
 		return new Date().getFullYear().toString();
 	};

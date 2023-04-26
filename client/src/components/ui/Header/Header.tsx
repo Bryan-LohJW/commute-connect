@@ -1,9 +1,10 @@
 import classes from './Header.module.scss';
 import logo from './../../../../public/images/logo-light.png';
+import { forwardRef } from 'react';
 
-const Header = () => {
+export const Header = forwardRef<HTMLDivElement>((props, ref) => {
 	return (
-		<header className={classes.header}>
+		<header className={classes.header} ref={ref}>
 			<img src={logo} className={classes.logo} />
 			<div className={classes.actions}>
 				<button
@@ -31,6 +32,6 @@ const Header = () => {
 			</div>
 		</header>
 	);
-};
+});
 
 export default Header;

@@ -1,17 +1,10 @@
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Landing } from './pages';
-import Header from './components/ui/Header/Header';
-import Footer from './components/ui/Footer/Footer';
+import { Overlay } from './components';
 
 const router = createBrowserRouter([
 	{
-		element: (
-			<>
-				<Header />
-				<Outlet />
-				<Footer />
-			</>
-		),
+		element: <Overlay />,
 		children: [{ path: '/', element: <Landing /> }],
 	},
 ]);
