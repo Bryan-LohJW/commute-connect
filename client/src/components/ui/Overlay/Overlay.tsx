@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import { useEffect, useRef, useState } from 'react';
+import { Card, LoginForm } from './index';
 
 export const Overlay = () => {
 	const headerRef = useRef<HTMLDivElement>(null);
@@ -19,6 +20,7 @@ export const Overlay = () => {
 
 	return (
 		<>
+			<LoginForm />
 			<Header ref={headerRef} />
 			<div style={{ minHeight: `${outletHeight}px` }}>
 				<Outlet />

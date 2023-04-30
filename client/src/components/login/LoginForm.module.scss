@@ -1,0 +1,53 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+
+.input {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+
+	.label {
+		padding-left: 8px;
+		position: absolute;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.label-focus {
+		top: -50%;
+		font-size: small;
+	}
+	.input {
+		border: 1px solid black;
+		padding: 0.5rem;
+	}
+	.error-message {
+		position: absolute;
+		top: 100%;
+		padding: 0 0.5rem;
+		color: #cc0033;
+	}
+}
+
+.logo {
+	width: 8rem;
+	position: relative;
+	margin: 0 auto;
+}
+
+.button-primary {
+	@extend %button;
+	width: 100%;
+	border-radius: 0;
+	&:hover {
+		@extend %button-hover;
+	}
+	@include button-theme($primary, $secondary);
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
