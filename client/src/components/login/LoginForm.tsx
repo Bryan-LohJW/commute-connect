@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Card } from '.';
-import logo from '/public/images/logo-light.png';
+import logo from '/src/assets/logo-light.png';
 import classes from './LoginForm.module.scss';
 import { useState } from 'react';
 
