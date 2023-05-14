@@ -17,7 +17,13 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
 	};
 
 	return (
-		<div className={classes.card} style={cardStyle}>
+		<div
+			className={classes.card}
+			style={cardStyle}
+			onClick={(e) => {
+				e.stopPropagation();
+			}}
+		>
 			{children}
 		</div>
 	);

@@ -1,6 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Landing } from './pages';
 import { Overlay } from './components';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const router = createBrowserRouter([
 	{
@@ -10,7 +13,15 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-	return <RouterProvider router={router} />;
+	const queryClient = new QueryClient();
+
+	return (
+		<QueryClientProvider client={queryClient}>
+			<Provider store={store}>
+				<RouterProvider router={router} />;
+			</Provider>
+		</QueryClientProvider>
+	);
 };
 
 export default App;

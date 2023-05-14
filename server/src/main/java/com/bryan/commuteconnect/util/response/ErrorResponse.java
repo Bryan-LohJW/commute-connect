@@ -1,4 +1,4 @@
-package com.bryan.commuteconnect.auth;
+package com.bryan.commuteconnect.util.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String email;
-    private String password;
+public class ErrorResponse {
+    private String message;
 }

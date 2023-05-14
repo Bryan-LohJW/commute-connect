@@ -3,31 +3,30 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Card } from './../ui/Card';
 import logo from '/src/assets/logo-light.png';
-import classes from './LoginForm.module.scss';
+import classes from './SignUpForm.module.scss';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import { useOutsideClick } from '../../hooks';
 import { useDispatch } from 'react-redux';
-import { hideLogin, showSignUp, login as storeLogin } from '../../store';
+import { hideSignUp, showLogin } from '../../store';
 import { BiError } from 'react-icons/bi';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
-	password: z.string().min(8, 'Password is too short'),
+	password: z.string().min(8, 'Password should be at least 8 characters'),
 });
 
-type LoginData = {
+type SignUpData = {
 	email: string;
 	password: string;
 };
 
-export const LoginForm = () => {
+export const SignUpForm = () => {
 	const [formError, setFormError] = useState<string | null>(null);
 	const [emailFocus, setEmailFocus] = useState(false);
 	const [passwordFocus, setPasswordFocus] = useState(false);
 	const dispatch = useDispatch();
 	const ref = useOutsideClick(() => {
-		dispatch(hideLogin());
+		dispatch(hideSignUp());
 	});
 
 	const {
@@ -35,50 +34,35 @@ export const LoginForm = () => {
 		handleSubmit,
 		watch,
 		formState: { errors },
-		clearErrors,
-	} = useForm<LoginData>({ resolver: zodResolver(schema) });
+		setFocus,
+	} = useForm<SignUpData>({ resolver: zodResolver(schema) });
 
-	const login = async (credentials: { email: string; password: string }) => {
-		const response = await fetch(
-			'http://localhost:8080/auth/authenticate',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: credentials.email,
-					password: credentials.password,
-				}),
-			}
-		);
+	const signUp = async (credentials: { email: string; password: string }) => {
+		const response = await fetch('http://localhost:8080/auth/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: credentials.email,
+				password: credentials.password,
+			}),
+		});
+		if (response.status === 409) {
+			const data = await response.json();
+			setFormError(data.message);
+			setFocus('email');
+			return;
+		}
 		if (!response.ok) {
-			if (response.status === 403) {
-				setFormError('Invalid credentials');
-				return;
-			}
-			setFormError('Unexpected error, try again later');
+			const data = await response.json();
+			setFormError(data.message);
 			return;
 		}
 		const data = await response.json();
-		dispatch(hideLogin());
-		dispatch(
-			storeLogin({
-				token: data['access_token'],
-			})
-		);
+		dispatch(hideSignUp());
 		return data;
 	};
-
-	const { mutate } = useMutation<
-		string,
-		unknown,
-		{ email: string; password: string },
-		unknown
-	>({
-		mutationKey: ['login'],
-		mutationFn: login,
-	});
 
 	const clearFormErrors = () => {
 		setTimeout(() => {
@@ -100,10 +84,20 @@ export const LoginForm = () => {
 		setPasswordFocus(!!watch('password').length);
 	};
 
-	const submitHandler = async (data: LoginData) => {
-		mutate(data);
+	const submitHandler = async (data: SignUpData) => {
+		signUp(data);
 	};
 
+	register('email', {
+		onChange: () => {
+			setFormError(null);
+		},
+		onBlur: handleEmailBlur,
+	});
+
+	register('password', {
+		onBlur: handlePasswordBlur,
+	});
 	return (
 		<div ref={ref}>
 			<Card>
@@ -114,13 +108,10 @@ export const LoginForm = () => {
 					<div className={classes.heading}>
 						<img src={logo} className={classes.logo} />
 						<p className={classes['sign-up-action']}>
-							Not a member?{' '}
-							<a onClick={() => dispatch(showSignUp())}>
-								Sign Up
-							</a>
+							Already signed up?{' '}
+							<a onClick={() => dispatch(showLogin())}>Log In</a>
 						</p>
 					</div>
-
 					<div className={classes.inputs}>
 						<div className={classes['input-wrap']}>
 							<label
@@ -135,7 +126,6 @@ export const LoginForm = () => {
 								type="text"
 								className={classes.input}
 								onFocus={handleEmailFocus}
-								onBlur={handleEmailBlur}
 							/>
 							{errors.email && (
 								<span className={classes['error-message']}>
@@ -159,7 +149,6 @@ export const LoginForm = () => {
 								type="password"
 								className={classes.input}
 								onFocus={handlePasswordFocus}
-								onBlur={handlePasswordBlur}
 							/>
 							{errors.password && (
 								<span className={classes['error-message']}>
@@ -182,7 +171,7 @@ export const LoginForm = () => {
 						<input
 							className={classes['button-primary']}
 							type="submit"
-							value={'Login'}
+							value={'Sign Up'}
 							onClick={() => clearFormErrors()}
 						/>
 					</div>

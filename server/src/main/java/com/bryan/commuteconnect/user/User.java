@@ -1,5 +1,6 @@
 package com.bryan.commuteconnect.user;
 
+import com.bryan.commuteconnect.userProfile.UserProfile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,12 +23,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // default for postgresql is seqyence
     private Integer id;
-    private String firstName;
-    private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne
+    private UserProfile profile;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

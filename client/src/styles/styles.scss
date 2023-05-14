@@ -4,6 +4,12 @@
 	color: $secondary;
 }
 
+@mixin font-style($color, $size, $weight) {
+	color: $color;
+	font-size: $size;
+	font-weight: $weight;
+}
+
 %button {
 	font-size: 1rem;
 	font-weight: 700;
