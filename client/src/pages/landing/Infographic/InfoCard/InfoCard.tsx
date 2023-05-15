@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { IconType } from 'react-icons';
 import classes from './InfoCard.module.scss';
-import { FC } from 'react';
 
 type InfoCardProps = {
 	icon: IconType;

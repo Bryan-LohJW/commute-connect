@@ -1,0 +1,28 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+
+.footer {
+	background-color: $primary;
+
+	box-sizing: border-box;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	width: 100%;
+	height: 6rem;
+	padding: 0px 2rem;
+
+	@extend %secondary-medium-font;
+}
+
+.icon {
+	height: 55%;
+	width: auto;
+	color: $secondary;
+}
+
+.icon:hover {
+	cursor: pointer;
+}

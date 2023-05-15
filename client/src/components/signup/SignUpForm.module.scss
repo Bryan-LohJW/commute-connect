@@ -1,0 +1,115 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+
+.input-wrap {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+
+	width: 100%;
+
+	.label {
+		position: absolute;
+		left: 0.5rem;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.label-focus {
+		top: -50%;
+		font-size: small;
+	}
+	.input {
+		border: 1px solid black;
+		padding: 0.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	.error-message {
+		@include font-style($error, small, 400);
+
+		display: flex;
+		align-items: center;
+
+		position: absolute;
+		top: 100%;
+		width: 100%;
+		padding: 0.5rem;
+		background-color: $error-light;
+		box-sizing: border-box;
+
+		.error-icon {
+			height: 15px;
+			width: 15px;
+		}
+	}
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+
+	width: 15rem;
+
+	.heading {
+		margin: 0 auto;
+
+		.logo {
+			width: 10rem;
+			position: relative;
+		}
+
+		.sign-up-action {
+			@include font-style(black, small, 400);
+
+			a {
+				color: blue;
+				&:hover {
+					text-decoration: underline;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+	.inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.action {
+		position: relative;
+
+		.error-message {
+			@include font-style($error, small, 400);
+
+			display: flex;
+			align-items: center;
+
+			position: absolute;
+			transform: translateY(-100%);
+			width: 100%;
+			padding: 0.5rem;
+			background-color: $error-light;
+			box-sizing: border-box;
+
+			.error-icon {
+				height: 15px;
+				width: 15px;
+			}
+		}
+		.button-primary {
+			@extend %button;
+			width: 100%;
+			border-radius: 0;
+			&:hover {
+				@extend %button-hover;
+			}
+			@include button-theme($primary, $secondary);
+		}
+	}
+}
