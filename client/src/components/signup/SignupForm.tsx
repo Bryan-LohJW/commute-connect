@@ -1,21 +1,22 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { BiError } from 'react-icons/bi';
+
 import { Card } from './../ui/Card';
+import { useOutsideClick } from '../../hooks';
+import { hideSignUp, showLogin } from '../../store';
 import logo from '/src/assets/logo-light.png';
 import classes from './SignUpForm.module.scss';
-import { useState } from 'react';
-import { useOutsideClick } from '../../hooks';
-import { useDispatch } from 'react-redux';
-import { hideSignUp, showLogin } from '../../store';
-import { BiError } from 'react-icons/bi';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
 	password: z.string().min(8, 'Password should be at least 8 characters'),
 });
 
-type SignUpData = {
+type SignUpInput = {
 	email: string;
 	password: string;
 };
@@ -35,9 +36,9 @@ export const SignUpForm = () => {
 		watch,
 		formState: { errors },
 		setFocus,
-	} = useForm<SignUpData>({ resolver: zodResolver(schema) });
+	} = useForm<SignUpInput>({ resolver: zodResolver(schema) });
 
-	const signUp = async (credentials: { email: string; password: string }) => {
+	const signUp = async (credentials: SignUpInput) => {
 		const response = await fetch('http://localhost:8080/auth/register', {
 			method: 'POST',
 			headers: {
@@ -84,7 +85,7 @@ export const SignUpForm = () => {
 		setPasswordFocus(!!watch('password').length);
 	};
 
-	const submitHandler = async (data: SignUpData) => {
+	const submitHandler = async (data: SignUpInput) => {
 		signUp(data);
 	};
 

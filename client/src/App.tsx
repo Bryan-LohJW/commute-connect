@@ -1,8 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
 import { Landing } from './pages';
 import { Overlay } from './components';
-import { Provider } from 'react-redux';
 import { store } from './store';
 
 const router = createBrowserRouter([

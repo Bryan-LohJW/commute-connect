@@ -1,10 +1,10 @@
+import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-import { useEffect, useRef, useState } from 'react';
 import { LoginForm } from './index';
 import { SignUpForm } from '../../signup';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 
 export const Overlay = () => {

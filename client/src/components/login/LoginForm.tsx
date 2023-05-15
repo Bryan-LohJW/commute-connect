@@ -1,22 +1,23 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
+import { BiError } from 'react-icons/bi';
+
 import { Card } from './../ui/Card';
+import { useOutsideClick } from '../../hooks';
+import { hideLogin, showSignUp, login as storeLogin } from '../../store';
 import logo from '/src/assets/logo-light.png';
 import classes from './LoginForm.module.scss';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { useOutsideClick } from '../../hooks';
-import { useDispatch } from 'react-redux';
-import { hideLogin, showSignUp, login as storeLogin } from '../../store';
-import { BiError } from 'react-icons/bi';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
 	password: z.string().min(8, 'Password is too short'),
 });
 
-type LoginData = {
+type LoginInput = {
 	email: string;
 	password: string;
 };
@@ -35,10 +36,9 @@ export const LoginForm = () => {
 		handleSubmit,
 		watch,
 		formState: { errors },
-		clearErrors,
-	} = useForm<LoginData>({ resolver: zodResolver(schema) });
+	} = useForm<LoginInput>({ resolver: zodResolver(schema) });
 
-	const login = async (credentials: { email: string; password: string }) => {
+	const login = async (credentials: LoginInput) => {
 		const response = await fetch(
 			'http://localhost:8080/auth/authenticate',
 			{
@@ -52,11 +52,11 @@ export const LoginForm = () => {
 				}),
 			}
 		);
+		if (response.status === 403) {
+			setFormError('Invalid credentials');
+			return;
+		}
 		if (!response.ok) {
-			if (response.status === 403) {
-				setFormError('Invalid credentials');
-				return;
-			}
 			setFormError('Unexpected error, try again later');
 			return;
 		}
@@ -100,9 +100,17 @@ export const LoginForm = () => {
 		setPasswordFocus(!!watch('password').length);
 	};
 
-	const submitHandler = async (data: LoginData) => {
+	const submitHandler = async (data: LoginInput) => {
 		mutate(data);
 	};
+
+	register('email', {
+		onBlur: handleEmailBlur,
+	});
+
+	register('password', {
+		onBlur: handlePasswordBlur,
+	});
 
 	return (
 		<div ref={ref}>
@@ -135,7 +143,6 @@ export const LoginForm = () => {
 								type="text"
 								className={classes.input}
 								onFocus={handleEmailFocus}
-								onBlur={handleEmailBlur}
 							/>
 							{errors.email && (
 								<span className={classes['error-message']}>
@@ -159,7 +166,6 @@ export const LoginForm = () => {
 								type="password"
 								className={classes.input}
 								onFocus={handlePasswordFocus}
-								onBlur={handlePasswordBlur}
 							/>
 							{errors.password && (
 								<span className={classes['error-message']}>

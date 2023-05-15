@@ -12,7 +12,6 @@ export const Footer = () => {
 				className={classes.icon}
 				onClick={() => {
 					window.open(import.meta.env.VITE_GITHUB_LINK);
-					console.log('hello');
 				}}
 			/>
 		</footer>

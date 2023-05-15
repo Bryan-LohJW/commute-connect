@@ -28,7 +28,6 @@ export const authSlice = createSlice({
 			const payload = jose.decodeJwt(action.payload.token);
 			state.sub = payload.sub || null;
 			state.authenticated = true;
-			console.log('hello');
 		},
 		logout: (state) => {
 			state.token = null;

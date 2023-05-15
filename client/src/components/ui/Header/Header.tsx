@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import classes from './Header.module.scss';
-import logo from '/src/assets/logo-light.png';
 import { forwardRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState, logout, showLogin, showSignUp } from '../../../store';
+import logo from '/src/assets/logo-light.png';
+import classes from './Header.module.scss';
 
 export const Header = forwardRef<HTMLDivElement>((prop, ref) => {
 	const dispatch = useDispatch();
