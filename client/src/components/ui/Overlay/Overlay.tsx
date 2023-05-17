@@ -6,11 +6,15 @@ import Header from '../Header/Header';
 import { LoginForm } from './index';
 import { SignUpForm } from '../../signup';
 import { RootState } from '../../../store';
+import classes from './Overlay.module.scss';
 
 export const Overlay = () => {
 	const headerRef = useRef<HTMLDivElement>(null);
 	const [outletHeight, setOutletHeight] = useState(0);
 	const formState = useSelector((state: RootState) => state.form);
+	const showHeader = useSelector<RootState>(
+		(state) => state.display.showHeader
+	);
 
 	useEffect(() => {
 		const headerHeight = headerRef.current?.offsetHeight;
@@ -28,8 +32,11 @@ export const Overlay = () => {
 				{formState.loginForm && <LoginForm />}
 				{formState.signUpForm && <SignUpForm />}
 			</>
-			<Header ref={headerRef} />
-			<div style={{ minHeight: `${outletHeight}px` }}>
+			{showHeader && <Header ref={headerRef} />}
+			<div
+				className={classes.overlay}
+				style={{ minHeight: `${outletHeight}px` }}
+			>
 				<Outlet />
 			</div>
 			<Footer />

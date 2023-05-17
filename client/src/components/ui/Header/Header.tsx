@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, logout, showLogin, showSignUp } from '../../../store';
 import logo from '/src/assets/logo-light.png';
 import classes from './Header.module.scss';
+import { NavLink } from 'react-router-dom';
 
 export const Header = forwardRef<HTMLDivElement>((prop, ref) => {
 	const dispatch = useDispatch();
@@ -43,6 +44,13 @@ export const Header = forwardRef<HTMLDivElement>((prop, ref) => {
 
 	const logoutActions = (
 		<div className={classes.actions}>
+			<NavLink to={'/profile'}>
+				<button
+					className={`${classes.button} ${classes['button-secondary']}`}
+				>
+					Profile
+				</button>
+			</NavLink>
 			<button
 				className={`${classes.button} ${classes['button-secondary']}`}
 				onClick={logoutHandler}
