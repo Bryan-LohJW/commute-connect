@@ -53,7 +53,51 @@ export const Profile = () => {
 					</NavLink>
 				</div>
 			</div>
-			<div className={classes.content}>Forms</div>
+			<div className={classes.content}>
+				<div className={classes['form-title']}>Profile Details</div>
+				<form className={classes.form}>
+					<div className={classes.inputs}>
+						<div className={classes['input-wrap']}>
+							<label className={classes.label}>Name</label>
+							<input type="text" className={classes.input} />
+						</div>
+						<div className={classes['input-wrap']}>
+							<label className={classes.label}>Gender</label>
+							<input type="text" className={classes.input} />
+						</div>
+						<div className={classes['input-wrap']}>
+							<label className={classes.label}>Age</label>
+							<input type="number" className={classes.input} />
+						</div>
+						<div className={classes['input-wrap']}>
+							<label className={classes.label}>
+								Interests (comma separated)
+							</label>
+							<input type="text" className={classes.input} />
+						</div>
+						<div className={classes['input-wrap']}>
+							<label className={classes.label}>Occupation</label>
+							<input type="text" className={classes.input} />
+						</div>
+						<div className={classes['input-wrap']}>
+							<label className={classes.label}>About Me</label>
+							<textarea className={classes.input} />
+						</div>
+					</div>
+					<div className={classes.action}>
+						<input
+							className={classes['button-primary']}
+							type="submit"
+							value={'Submit'}
+						/>
+						<input
+							className={classes['button-secondary']}
+							type="submit"
+							value={'Reset'}
+						/>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 };
