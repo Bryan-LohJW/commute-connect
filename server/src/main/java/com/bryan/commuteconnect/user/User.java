@@ -1,6 +1,5 @@
 package com.bryan.commuteconnect.user;
 
-import com.bryan.commuteconnect.userProfile.UserProfile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +28,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UserProfile profile;
 
     @Override

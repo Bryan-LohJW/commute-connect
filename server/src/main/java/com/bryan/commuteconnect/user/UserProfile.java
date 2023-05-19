@@ -1,4 +1,4 @@
-package com.bryan.commuteconnect.userProfile;
+package com.bryan.commuteconnect.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
