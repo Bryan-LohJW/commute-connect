@@ -25,11 +25,11 @@ public class UserService {
         return result.get();
     }
 
-    public ResponseEntity<User> setProfile(String email, UserProfile profile) throws UserNotFoundException {
+    public User setProfile(String email, UserProfile profile) throws UserNotFoundException {
         Optional<User> result = userRepository.findByEmail(email);
         if (result.isEmpty()) throw new UserNotFoundException();
         User user = result.get();
         user.setProfile(profile);
-        return new ResponseEntity<User>(userRepository.save(user), HttpStatus.OK);
+        return userRepository.save(user);
     }
 }
