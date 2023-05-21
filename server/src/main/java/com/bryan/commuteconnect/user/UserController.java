@@ -27,7 +27,9 @@ public class UserController {
 
     @PutMapping("/user/profile")
     public ResponseEntity<User> setUserProfile(@RequestBody UserProfileRequest request) throws UserNotFoundException {
-        return ResponseEntity.ok(service.setProfile(request.getUserEmail(), request.getUserProfile()));
+        // get user
+        User user = service.getUserByEmail(request.getUserEmail());
+        return ResponseEntity.ok(service.setProfile(user, request));
     }
 
     @ExceptionHandler(value = UserNotFoundException.class)

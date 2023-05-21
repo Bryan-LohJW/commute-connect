@@ -1,10 +1,7 @@
 package com.bryan.commuteconnect.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@Setter
 @Data
 @Builder
 @NoArgsConstructor
@@ -22,14 +21,26 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // default for postgresql is seqyence
     private Integer id;
+
     @Column(unique = true)
     private String email;
+
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private UserProfile profile;
+    private String name;
+
+    private Gender gender;
+
+    private Integer age;
+
+    private String occupation;
+
+    private String[] interests;
+
+    private String about;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
