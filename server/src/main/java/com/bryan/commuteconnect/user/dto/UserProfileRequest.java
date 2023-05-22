@@ -1,4 +1,4 @@
-package com.bryan.commuteconnect.user.request;
+package com.bryan.commuteconnect.user.dto;
 
 import com.bryan.commuteconnect.user.Gender;
 import lombok.*;

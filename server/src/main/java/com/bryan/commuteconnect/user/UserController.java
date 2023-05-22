@@ -1,8 +1,9 @@
 package com.bryan.commuteconnect.user;
 
 import com.bryan.commuteconnect.user.advice.UserNotFoundException;
-import com.bryan.commuteconnect.user.request.UserProfileRequest;
-import com.bryan.commuteconnect.user.request.UserRequest;
+import com.bryan.commuteconnect.user.dto.UserDTO;
+import com.bryan.commuteconnect.user.dto.UserProfileRequest;
+import com.bryan.commuteconnect.user.dto.UserRequest;
 import com.bryan.commuteconnect.util.response.ErrorResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,21 +16,24 @@ public class UserController {
     private final UserService service;
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Integer id) throws UserNotFoundException {
-        return ResponseEntity.ok(service.getUser(id));
+    public ResponseEntity<UserDTO> getUser(@PathVariable Integer id) throws UserNotFoundException {
+        User user = service.getUser(id);
+        return ResponseEntity.ok(service.convertUserToDTO(user));
     }
 
     // moving forward will change to get user email from sub for security
     @GetMapping("/user")
-    public ResponseEntity<User> getUserByEmail(@RequestBody UserRequest request) throws UserNotFoundException {
-        return ResponseEntity.ok(service.getUserByEmail(request.getUserEmail()));
+    public ResponseEntity<UserDTO> getUserByEmail(@RequestBody UserRequest request) throws UserNotFoundException {
+        User user = service.getUserByEmail(request.getUserEmail());
+        return ResponseEntity.ok(service.convertUserToDTO(user));
     }
 
     @PutMapping("/user/profile")
-    public ResponseEntity<User> setUserProfile(@RequestBody UserProfileRequest request) throws UserNotFoundException {
+    public ResponseEntity<UserDTO> setUserProfile(@RequestBody UserProfileRequest request) throws UserNotFoundException {
         // get user
         User user = service.getUserByEmail(request.getUserEmail());
-        return ResponseEntity.ok(service.setProfile(user, request));
+        User updatedUser = service.setProfile(user, request);
+        return ResponseEntity.ok(service.convertUserToDTO(updatedUser));
     }
 
     @ExceptionHandler(value = UserNotFoundException.class)
