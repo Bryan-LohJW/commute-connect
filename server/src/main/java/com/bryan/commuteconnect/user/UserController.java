@@ -15,16 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService service;
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Integer id) throws UserNotFoundException {
-        User user = service.getUser(id);
-        return ResponseEntity.ok(service.convertUserToDTO(user));
-    }
-
     // moving forward will change to get user email from sub for security
-    @GetMapping("/user")
-    public ResponseEntity<UserDTO> getUserByEmail(@RequestBody UserRequest request) throws UserNotFoundException {
-        User user = service.getUserByEmail(request.getUserEmail());
+    @GetMapping("/user/{email}")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) throws UserNotFoundException {
+        User user = service.getUserByEmail(email);
         return ResponseEntity.ok(service.convertUserToDTO(user));
     }
 
