@@ -6,8 +6,12 @@ import { MdOutlineWorkOutline } from 'react-icons/md';
 import { RiInformationLine } from 'react-icons/ri';
 
 import classes from './ProfileDetails.module.scss';
+import { useDispatch } from 'react-redux';
+import { showProfileForm } from '../../store';
 
 export const ProfileDetails = () => {
+	const dispatch = useDispatch();
+
 	return (
 		<>
 			<div className={classes['title']}>Profile Details</div>
@@ -60,7 +64,12 @@ export const ProfileDetails = () => {
 					</div>
 				</div>
 				<div className={classes.action}>
-					<button className={classes['button-secondary']}>
+					<button
+						className={classes['button-secondary']}
+						onClick={() => {
+							dispatch(showProfileForm());
+						}}
+					>
 						Edit
 					</button>
 				</div>

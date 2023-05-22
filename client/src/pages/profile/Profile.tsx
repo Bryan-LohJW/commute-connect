@@ -1,17 +1,22 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { RxExit } from 'react-icons/rx';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsPerson, BsKey } from 'react-icons/bs';
 
-import profilePicture from './../../assets/temp-profile.png';
-
-import { hideHeader, showHeader } from '../../store/displayStore';
-import classes from './Profile.module.scss';
 import { ProfileDetails } from './ProfileDetails';
+import { hideHeader, showHeader } from '../../store/displayStore';
+import profilePicture from './../../assets/temp-profile.png';
+import classes from './Profile.module.scss';
+import { RootState, hideProfileForm, showProfileForm } from '../../store';
+import { ProfileForm } from '.';
 
 export const Profile = () => {
+	const editProfile = useSelector(
+		(state: RootState) => state.profile.editProfile
+	);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -55,7 +60,16 @@ export const Profile = () => {
 				</div>
 			</div>
 			<div className={classes.content}>
-				<ProfileDetails />
+				{editProfile ? <ProfileForm /> : <ProfileDetails />}
+				<button
+					onClick={() => {
+						editProfile
+							? dispatch(hideProfileForm())
+							: dispatch(showProfileForm());
+					}}
+				>
+					Toggle
+				</button>
 			</div>
 		</div>
 	);
