@@ -10,6 +10,15 @@ type ProfileState = {
 	aboutMe: string | null;
 };
 
+type Profile = {
+	name: string | null;
+	gender: 'MALE' | 'FEMALE' | 'NA' | null;
+	age: string | null;
+	interests: string[] | null;
+	occupation: string | null;
+	aboutMe: string | null;
+};
+
 const initialState: ProfileState = {
 	editProfile: false,
 	name: null,
@@ -30,7 +39,7 @@ export const profileSlice = createSlice({
 		hideProfileForm: (state) => {
 			state.editProfile = false;
 		},
-		setProfile: (state, action: PayloadAction<ProfileState>) => {
+		setProfile: (state, action: PayloadAction<Profile>) => {
 			state.name = action.payload.name;
 			state.gender = action.payload.gender;
 			state.age = action.payload.age;
