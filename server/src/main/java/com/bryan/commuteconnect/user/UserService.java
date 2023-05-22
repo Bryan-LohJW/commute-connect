@@ -27,8 +27,13 @@ public class UserService {
     }
 
     public User setProfile(User user, UserProfileRequest profile) throws UserNotFoundException {
-        User updatedUser = mapper.userProfileToUser(profile);
-        return userRepository.save(updatedUser);
+        user.setName(profile.getName());
+        user.setGender(profile.getGender());
+        user.setAge(profile.getAge());
+        user.setOccupation(profile.getOccupation());
+        user.setInterests(profile.getInterests());
+        user.setAbout(profile.getAbout());
+        return userRepository.save(user);
     }
 
     public UserDTO convertUserToDTO(User user) {

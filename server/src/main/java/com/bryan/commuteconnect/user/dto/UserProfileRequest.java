@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserProfileRequest {
-    private String userEmail;
     private String name;
     private Gender gender;
     private Integer age;

@@ -7,9 +7,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    @Mapping(target = "email", source = "userProfileRequest.userEmail")
-    @Mapping(target = "name", source = "name")
-    User userProfileToUser(UserProfileRequest userProfileRequest);
 
     UserDTO userToUserDTO(User user);
 }
