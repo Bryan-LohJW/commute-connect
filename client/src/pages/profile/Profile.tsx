@@ -70,6 +70,7 @@ export const Profile = () => {
 
 		return () => {
 			dispatch(showHeader());
+			dispatch(hideProfileForm());
 		};
 	}, [dispatch, jwtToken]);
 

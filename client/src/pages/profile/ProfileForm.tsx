@@ -1,7 +1,10 @@
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BiError } from 'react-icons/bi';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState, setProfile, showProfileForm } from '../../store';
 import classes from './Profile.module.scss';
 
 const schema = z.object({
@@ -28,14 +31,17 @@ const schema = z.object({
 
 type ProfileInput = {
 	name: string;
-	gender: string;
+	gender: 'MALE' | 'FEMALE' | 'NA' | null;
 	age: string;
-	interests: string;
+	interests: string[];
 	occupation: string;
 	aboutMe: string;
 };
 
 export const ProfileForm = () => {
+	const jwtToken = useSelector((state: RootState) => state.auth.token);
+	const dispatch = useDispatch();
+
 	const {
 		register,
 		handleSubmit,
@@ -44,8 +50,19 @@ export const ProfileForm = () => {
 		resolver: zodResolver(schema),
 	});
 
-	const submitHandler = (data: ProfileInput) => {
-		console.log(data);
+	const submitHandler = async (data: ProfileInput) => {
+		const response = await fetch('http://localhost:8080/user/profile', {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {
+				Authorization: `Bearer ${jwtToken}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+		if (!response.ok) return;
+		dispatch(setProfile(data));
+		dispatch(showProfileForm());
 	};
 
 	return (
