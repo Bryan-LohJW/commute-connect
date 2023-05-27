@@ -53,6 +53,7 @@ export const Profile = () => {
 				return;
 			}
 			const profileDto = (await response.json()) as UserDetails;
+			console.log(profileDto);
 			const profile = {
 				email: profileDto.email,
 				name: profileDto.name,
@@ -74,6 +75,7 @@ export const Profile = () => {
 		};
 	}, [dispatch, jwtToken]);
 
+	// move sidebar to another component to make it neater
 	return (
 		<div className={classes.layout}>
 			<div className={classes.sidebar}>
@@ -108,15 +110,6 @@ export const Profile = () => {
 			</div>
 			<div className={classes.content}>
 				{editProfile ? <ProfileForm /> : <ProfileDetails />}
-				<button
-					onClick={() => {
-						editProfile
-							? dispatch(hideProfileForm())
-							: dispatch(showProfileForm());
-					}}
-				>
-					Toggle
-				</button>
 			</div>
 		</div>
 	);

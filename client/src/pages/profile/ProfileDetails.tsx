@@ -23,14 +23,18 @@ export const ProfileDetails = () => {
 	) {
 		return (
 			<>
-				<div>Create your profile</div>
-				<button
-					onClick={() => {
-						dispatch(showProfileForm());
-					}}
-				>
-					Edit
-				</button>
+				<div className={classes.wrapper}>
+					<h2 className={classes.title}>Create your profile</h2>
+					<p>Create your profile and start connecting with others.</p>
+					<button
+						className={classes['button-primary']}
+						onClick={() => {
+							dispatch(showProfileForm());
+						}}
+					>
+						Edit
+					</button>
+				</div>
 			</>
 		);
 	}
@@ -53,7 +57,7 @@ export const ProfileDetails = () => {
 
 	return (
 		<>
-			<div className={classes['title']}>Profile Details</div>
+			<h2 className={classes['title']}>Profile Details</h2>
 			<div className={classes['details-wrapper']}>
 				<div className={classes.details}>
 					<div className={classes['detail']}>

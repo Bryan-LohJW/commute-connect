@@ -4,8 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BiError } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState, setProfile, showProfileForm } from '../../store';
-import classes from './Profile.module.scss';
+import { RootState, hideProfileForm, setProfile } from '../../store';
+import classes from './ProfileForm.module.scss';
+import { useEffect } from 'react';
 
 const schema = z.object({
 	name: z.string().min(1, 'Enter your name'),
@@ -16,7 +17,12 @@ const schema = z.object({
 	}),
 	age: z.preprocess(
 		(input) => parseInt(z.string().parse(input), 10),
-		z.number().positive().max(99)
+		z
+			.number({
+				invalid_type_error: 'Enter your age',
+			})
+			.positive({ message: 'Enter a valid age' })
+			.max(99, 'Enter a valid age')
 	),
 	interests: z.preprocess((input: unknown) => {
 		const array = (input as string).split(',');
@@ -24,7 +30,7 @@ const schema = z.object({
 			return str.trim();
 		});
 		return array;
-	}, z.array(z.string().min(1, 'Enter your name')).min(1, 'Enter your nama')),
+	}, z.array(z.string({ required_error: 'Enter your interests', invalid_type_error: 'asd' })).min(1)),
 	occupation: z.string().min(1, 'Enter your occupation'),
 	aboutMe: z.string().min(1, 'Enter something about yourself'),
 });
@@ -40,14 +46,28 @@ type ProfileInput = {
 
 export const ProfileForm = () => {
 	const jwtToken = useSelector((state: RootState) => state.auth.token);
+	const profileData = useSelector((state: RootState) => state.profile);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		setValue('age', profileData.age ? parseInt(profileData.age) : '');
+	});
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		setValue,
 	} = useForm<ProfileInput>({
 		resolver: zodResolver(schema),
+		defaultValues: {
+			name: profileData.name || '',
+			gender: profileData.gender || null,
+			// age: profileData.age || undefined,
+			interests: profileData.interests || undefined,
+			occupation: profileData.occupation || undefined,
+			aboutMe: profileData.aboutMe || undefined,
+		},
 	});
 
 	const submitHandler = async (data: ProfileInput) => {
@@ -62,7 +82,7 @@ export const ProfileForm = () => {
 		});
 		if (!response.ok) return;
 		dispatch(setProfile(data));
-		dispatch(showProfileForm());
+		dispatch(hideProfileForm());
 	};
 
 	return (
@@ -74,21 +94,35 @@ export const ProfileForm = () => {
 			>
 				<div className={classes.inputs}>
 					<div className={classes['input-wrap']}>
-						<label className={classes.label}>Name</label>
+						<label className={classes.label}>
+							Name
+							{errors.name && (
+								<span className={classes['error-message']}>
+									<BiError
+										className={classes['error-icon']}
+									/>
+									{errors.name?.message}
+								</span>
+							)}
+						</label>
 						<input
 							{...register('name')}
 							type="text"
 							className={classes.input}
 						/>
-						{errors.name && (
-							<span className={classes['error-message']}>
-								<BiError className={classes['error-icon']} />
-								{errors.name?.message}
-							</span>
-						)}
 					</div>
 					<div className={classes['input-wrap']}>
-						<label className={classes.label}>Gender</label>
+						<label className={classes.label}>
+							Gender{' '}
+							{errors.gender && (
+								<span className={classes['error-message']}>
+									<BiError
+										className={classes['error-icon']}
+									/>
+									{errors.gender?.message}
+								</span>
+							)}
+						</label>
 						<select
 							{...register('gender')}
 							className={classes.input}
@@ -98,69 +132,77 @@ export const ProfileForm = () => {
 							<option value="FEMALE">Female</option>
 							<option value="NA">Prefer not to say</option>
 						</select>
-						{errors.gender && (
-							<span className={classes['error-message']}>
-								<BiError className={classes['error-icon']} />
-								{errors.gender?.message}
-							</span>
-						)}
 					</div>
 					<div className={classes['input-wrap']}>
-						<label className={classes.label}>Age</label>
+						<label className={classes.label}>
+							Age{' '}
+							{errors.age && (
+								<span className={classes['error-message']}>
+									<BiError
+										className={classes['error-icon']}
+									/>
+									{errors.age?.message}
+								</span>
+							)}
+						</label>
 						<input
 							{...register('age')}
 							type="number"
 							className={classes.input}
 						/>
-						{errors.age && (
-							<span className={classes['error-message']}>
-								<BiError className={classes['error-icon']} />
-								{errors.age?.message}
-							</span>
-						)}
 					</div>
 					<div className={classes['input-wrap']}>
 						<label className={classes.label}>
 							Interests (comma separated)
+							{errors.interests && (
+								<span className={classes['error-message']}>
+									<BiError
+										className={classes['error-icon']}
+									/>
+									{errors.interests?.message}
+								</span>
+							)}
 						</label>
 						<input
 							{...register('interests')}
 							type="text"
 							className={classes.input}
 						/>
-						{errors.interests && (
-							<span className={classes['error-message']}>
-								<BiError className={classes['error-icon']} />
-								{errors.interests?.message}
-							</span>
-						)}
 					</div>
 					<div className={classes['input-wrap']}>
-						<label className={classes.label}>Occupation</label>
+						<label className={classes.label}>
+							Occupation
+							{errors.occupation && (
+								<span className={classes['error-message']}>
+									<BiError
+										className={classes['error-icon']}
+									/>
+									{errors.occupation?.message}
+								</span>
+							)}
+						</label>
 						<input
 							{...register('occupation')}
 							type="text"
 							className={classes.input}
 						/>
-						{errors.occupation && (
-							<span className={classes['error-message']}>
-								<BiError className={classes['error-icon']} />
-								{errors.occupation?.message}
-							</span>
-						)}
 					</div>
 					<div className={classes['input-wrap']}>
-						<label className={classes.label}>About Me</label>
+						<label className={classes.label}>
+							About Me
+							{errors.aboutMe && (
+								<span className={classes['error-message']}>
+									<BiError
+										className={classes['error-icon']}
+									/>
+									{errors.aboutMe?.message}
+								</span>
+							)}
+						</label>
 						<textarea
 							{...register('aboutMe')}
 							className={classes.input}
 						/>
-						{errors.aboutMe && (
-							<span className={classes['error-message']}>
-								<BiError className={classes['error-icon']} />
-								{errors.aboutMe?.message}
-							</span>
-						)}
 					</div>
 				</div>
 				<div className={classes.action}>
@@ -171,8 +213,9 @@ export const ProfileForm = () => {
 					/>
 					<input
 						className={classes['button-secondary']}
-						type="submit"
-						value={'Reset'}
+						type="button"
+						value={'Cancel'}
+						onClick={() => dispatch(hideProfileForm())}
 					/>
 				</div>
 			</form>

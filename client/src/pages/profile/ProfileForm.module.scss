@@ -1,0 +1,80 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+.form-title {
+	font-size: xx-large;
+	font-weight: 700;
+	padding-bottom: 4rem;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	.inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		.input-wrap {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			font-size: medium;
+			font-weight: 400;
+
+			.label {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				font-size: large;
+
+				.error-message {
+					@include font-style($error, small, 400);
+
+					display: flex;
+					align-items: center;
+
+					width: fit-content;
+
+					.error-icon {
+						height: 20px;
+						width: 20px;
+					}
+				}
+			}
+
+			.input {
+				border-radius: 0.3rem;
+				border: 2px solid grey;
+				padding: 0.2rem 0.2rem;
+			}
+		}
+	}
+
+	.action {
+		display: flex;
+		gap: 1rem;
+
+		.button-primary {
+			@extend %button;
+			border-radius: 0;
+			&:hover {
+				@extend %button-hover;
+			}
+			@include button-theme($primary, $secondary);
+		}
+
+		.button-secondary {
+			@extend %button;
+			border-radius: 0;
+			&:hover {
+				@extend %button-hover;
+			}
+			@include button-theme($secondary, $primary);
+			border: 3px solid $primary;
+		}
+	}
+}
