@@ -32,7 +32,7 @@ public class UserService {
         user.setAge(profile.getAge());
         user.setOccupation(profile.getOccupation());
         user.setInterests(profile.getInterests());
-        user.setAbout(profile.getAbout());
+        user.setAbout(profile.getAboutMe());
         return userRepository.save(user);
     }
 

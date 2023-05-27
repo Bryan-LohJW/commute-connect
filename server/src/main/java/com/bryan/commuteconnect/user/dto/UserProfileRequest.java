@@ -15,5 +15,5 @@ public class UserProfileRequest {
     private Integer age;
     private String occupation;
     private String[] interests;
-    private String about;
+    private String aboutMe;
 }
