@@ -8,6 +8,7 @@ import { RiInformationLine } from 'react-icons/ri';
 import classes from './ProfileDetails.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, showProfileForm } from '../../store';
+import image from './../../assets/people-talking.jpg';
 
 export const ProfileDetails = () => {
 	const dispatch = useDispatch();
@@ -25,14 +26,24 @@ export const ProfileDetails = () => {
 			<>
 				<div className={classes.wrapper}>
 					<h2 className={classes.title}>Create your profile</h2>
-					<p>Create your profile and start connecting with others.</p>
+					<div>
+						<img
+							className={classes.image}
+							src={image}
+							alt="People talking"
+						/>
+						<p className={classes.caption}>
+							Create your profile and start connecting with
+							others.
+						</p>
+					</div>
 					<button
 						className={classes['button-primary']}
 						onClick={() => {
 							dispatch(showProfileForm());
 						}}
 					>
-						Edit
+						Create
 					</button>
 				</div>
 			</>

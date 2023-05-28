@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import {
+	NavLink,
+	Outlet,
+	RouterProvider,
+	createBrowserRouter,
+} from 'react-router-dom';
 import { RxExit } from 'react-icons/rx';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsPerson, BsKey } from 'react-icons/bs';
@@ -87,22 +92,47 @@ export const Profile = () => {
 					></img>
 				</div>
 				<div className={classes.links}>
-					<NavLink to={'/'} className={classes.navlink}>
+					<NavLink
+						to={'/'}
+						className={({ isActive }) =>
+							`${classes.navlink} ${
+								isActive ? classes.active : ''
+							}`
+						}
+					>
 						<AiOutlineHome className={classes.icon} />
 						<p className={classes['nav-label']}>Home</p>
 					</NavLink>
 					<NavLink
-						to={'/'}
-						className={`${classes.navlink} ${classes.active}`}
+						to={'/profile'}
+						className={({ isActive }) =>
+							`${classes.navlink} ${
+								isActive ? classes.active : ''
+							}`
+						}
 					>
 						<BsPerson className={classes.icon} />
 						<p className={classes['nav-label']}>Profile Details</p>
 					</NavLink>
-					<NavLink to={'/'} className={classes.navlink}>
+					<NavLink
+						to={'/'}
+						className={({ isActive }) =>
+							`${classes.navlink} ${
+								isActive ? classes.active : ''
+							}`
+						}
+					>
 						<BsKey className={classes.icon} />
 						<p className={classes['nav-label']}>Change Password</p>
 					</NavLink>
-					<NavLink to={'/'} className={classes.navlink}>
+					<NavLink
+						to={'/'}
+						className={({ isActive }) =>
+							`${classes.navlink} ${
+								isActive ? classes.active : ''
+							}`
+						}
+					>
 						<RxExit className={classes.icon} />
 						<p className={classes['nav-label']}>Logout</p>
 					</NavLink>

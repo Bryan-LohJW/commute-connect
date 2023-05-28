@@ -49,21 +49,17 @@ export const ProfileForm = () => {
 	const profileData = useSelector((state: RootState) => state.profile);
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		setValue('age', profileData.age ? parseInt(profileData.age) : '');
-	});
-
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		setValue,
 	} = useForm<ProfileInput>({
 		resolver: zodResolver(schema),
 		defaultValues: {
+			// need to find out the bug with the age and interests input
 			name: profileData.name || '',
 			gender: profileData.gender || null,
-			// age: profileData.age || undefined,
+			age: profileData.age || undefined,
 			interests: profileData.interests || undefined,
 			occupation: profileData.occupation || undefined,
 			aboutMe: profileData.aboutMe || undefined,

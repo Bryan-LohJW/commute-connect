@@ -116,3 +116,13 @@
 		}
 	}
 }
+
+@media (max-width: 1200px) {
+	.layout {
+		.content {
+			position: fixed;
+			left: 90%;
+			transform: translateX(-100%);
+		}
+	}
+}
