@@ -1,4 +1,4 @@
-package com.bryan.commuteconnect.auth;
+package com.bryan.commuteconnect.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticateRequest {
-    private String email;
-    private String password;
+public class AuthenticationResponse {
+    private String access_token;
 }
