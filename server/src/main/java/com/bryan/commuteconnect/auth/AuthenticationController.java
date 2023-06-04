@@ -23,7 +23,7 @@ public class AuthenticationController {
     }
 
     @PutMapping("/password")
-    public ResponseEntity<ChangePasswordResponse> changePassword(@RequestBody ChangePasswordRequest request) {
+    public ResponseEntity<ChangePasswordResponse> changePassword(@RequestBody ChangePasswordRequest request) throws Exception {
         return ResponseEntity.ok(service.changePassword(request));
     }
 }

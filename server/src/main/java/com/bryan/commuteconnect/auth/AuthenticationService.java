@@ -61,10 +61,19 @@ public class AuthenticationService {
         return ResponseEntity.ok(AuthenticationResponse.builder().access_token(jwtToken).build());
     }
 
-    public ChangePasswordResponse changePassword(ChangePasswordRequest request) {
+    public ChangePasswordResponse changePassword(ChangePasswordRequest request) throws Exception {
+        if (request.getOldPassword() == request.getNewPassword()) {
+            // not throwing error
+            throw new RuntimeException();
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String authEmail = authentication.getName();
-        User user = userService.getUserByEmail(authEmail);
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        SecurityContextHolder.getContext().getAuthentication().getName(),
+                        request.getOldPassword()
+                )
+        );
+        User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         repository.save(user);
         return ChangePasswordResponse.builder().message("Password successfully changed").build();

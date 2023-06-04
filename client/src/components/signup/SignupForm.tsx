@@ -13,7 +13,7 @@ import classes from './SignUpForm.module.scss';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
-	password: z.string().min(8, 'Password should be at least 8 characters'),
+	password: z.string().min(8, 'At least 8 characters'),
 });
 
 type SignUpInput = {

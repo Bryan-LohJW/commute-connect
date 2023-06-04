@@ -14,7 +14,7 @@ import classes from './LoginForm.module.scss';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
-	password: z.string().min(8, 'Password is too short'),
+	password: z.string().min(8, 'At least 8 characters'),
 });
 
 type LoginInput = {
