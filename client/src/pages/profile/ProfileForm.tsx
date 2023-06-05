@@ -22,12 +22,8 @@ const schema = z.object({
 			return { message: 'Select an option' };
 		},
 	}),
-	age: z.string().regex(/\d{1,2}$/),
-	interests: z
-		.string({
-			required_error: 'Enter your interests',
-		})
-		.min(1),
+	age: z.string().regex(/^\d{1,2}$/, 'Enter a valid age'),
+	interests: z.string().min(1, 'Enter your interests'),
 	occupation: z.string().min(1, 'Enter your occupation'),
 	aboutMe: z.string().min(1, 'Enter something about yourself'),
 });
