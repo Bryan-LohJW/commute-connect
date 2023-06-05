@@ -12,7 +12,7 @@ import classes from './Profile.module.scss';
 import { RootState, hideProfileForm, setProfile } from '../../store';
 import { ProfileForm } from '.';
 
-type UserDetails = {
+type UserDetailsDTO = {
 	email: string;
 	name: string | null;
 	gender: 'MALE' | 'FEMALE' | 'NA' | null;
@@ -47,8 +47,7 @@ export const Profile = () => {
 				console.error('Something went wrong');
 				return;
 			}
-			const profileDto = (await response.json()) as UserDetails;
-			console.log(profileDto);
+			const profileDto = (await response.json()) as UserDetailsDTO;
 			const profile = {
 				email: profileDto.email,
 				name: profileDto.name,

@@ -10,7 +10,7 @@ type ProfileState = {
 	aboutMe: string | null;
 };
 
-type Profile = {
+export type Profile = {
 	name: string | null;
 	gender: 'MALE' | 'FEMALE' | 'NA' | null;
 	age: string | null;

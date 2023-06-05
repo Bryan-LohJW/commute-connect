@@ -4,42 +4,48 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BiError } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState, hideProfileForm, setProfile } from '../../store';
+import {
+	RootState,
+	hideProfileForm,
+	setProfile,
+	Profile as ProfileStore,
+} from '../../store';
 import classes from './ProfileForm.module.scss';
-import { useEffect } from 'react';
 
 const schema = z.object({
-	name: z.string().min(1, 'Enter your name'),
+	name: z
+		.string()
+		.min(1, 'Enter your name')
+		.regex(/^[A-Za-z ]*$/, 'Enter a valid name'),
 	gender: z.enum(['MALE', 'FEMALE', 'NA'], {
 		errorMap: () => {
 			return { message: 'Select an option' };
 		},
 	}),
-	age: z.preprocess(
-		(input) => parseInt(z.string().parse(input), 10),
-		z
-			.number({
-				invalid_type_error: 'Enter your age',
-			})
-			.positive({ message: 'Enter a valid age' })
-			.max(99, 'Enter a valid age')
-	),
-	interests: z.preprocess((input: unknown) => {
-		const array = (input as string).split(',');
-		array.forEach((str) => {
-			return str.trim();
-		});
-		return array;
-	}, z.array(z.string({ required_error: 'Enter your interests', invalid_type_error: 'asd' })).min(1)),
+	age: z.string().regex(/\d{1,2}$/),
+	interests: z
+		.string({
+			required_error: 'Enter your interests',
+		})
+		.min(1),
 	occupation: z.string().min(1, 'Enter your occupation'),
 	aboutMe: z.string().min(1, 'Enter something about yourself'),
 });
+
+type ProfileDTO = {
+	name: string;
+	gender: 'MALE' | 'FEMALE' | 'NA' | null;
+	age: number;
+	interests: string[];
+	occupation: string;
+	aboutMe: string;
+};
 
 type ProfileInput = {
 	name: string;
 	gender: 'MALE' | 'FEMALE' | 'NA' | null;
 	age: string;
-	interests: string[];
+	interests: string;
 	occupation: string;
 	aboutMe: string;
 };
@@ -56,17 +62,28 @@ export const ProfileForm = () => {
 	} = useForm<ProfileInput>({
 		resolver: zodResolver(schema),
 		defaultValues: {
-			// need to find out the bug with the age and interests input
 			name: profileData.name || '',
 			gender: profileData.gender || null,
 			age: profileData.age || undefined,
-			interests: profileData.interests || undefined,
+			interests: profileData.interests
+				? profileData.interests.join(', ')
+				: undefined,
 			occupation: profileData.occupation || undefined,
 			aboutMe: profileData.aboutMe || undefined,
 		},
 	});
 
 	const submitHandler = async (data: ProfileInput) => {
+		const mappedData: ProfileDTO = {
+			name: data.name,
+			gender: data.gender,
+			age: parseInt(data.age),
+			interests: data.interests
+				.split(',')
+				.map((interest) => interest.trim()),
+			occupation: data.occupation,
+			aboutMe: data.aboutMe,
+		};
 		const response = await fetch('http://localhost:8080/user/profile', {
 			method: 'PUT',
 			credentials: 'include',
@@ -74,10 +91,20 @@ export const ProfileForm = () => {
 				Authorization: `Bearer ${jwtToken}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(data),
+			body: JSON.stringify(mappedData),
 		});
 		if (!response.ok) return;
-		dispatch(setProfile(data));
+		const UserDetailString: ProfileStore = {
+			name: data.name,
+			gender: data.gender,
+			age: data.age,
+			interests: data.interests
+				.split(',')
+				.map((interest) => interest.trim()),
+			occupation: data.occupation,
+			aboutMe: data.aboutMe,
+		};
+		dispatch(setProfile(UserDetailString));
 		dispatch(hideProfileForm());
 	};
 
