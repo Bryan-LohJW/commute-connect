@@ -10,6 +10,7 @@ import { useOutsideClick } from '../../hooks';
 import { hideSignUp, showLogin } from '../../store';
 import logo from '/src/assets/logo-light.png';
 import classes from './SignUpForm.module.scss';
+import { toast } from 'react-hot-toast';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
@@ -62,6 +63,15 @@ export const SignUpForm = () => {
 		}
 		const data = await response.json();
 		dispatch(hideSignUp());
+		toast('Successfully signed up', {
+			position: 'top-center',
+			style: {
+				backgroundColor: '#73c2fb',
+				color: '#ffffff',
+				padding: '1rem',
+				fontWeight: 'bolder',
+			},
+		});
 		return data;
 	};
 

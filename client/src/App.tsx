@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { Landing, Profile } from './pages';
 import { Overlay } from './components';
 import { store } from './store';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
 	{
@@ -21,6 +22,7 @@ const App = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Provider store={store}>
+				<Toaster />
 				<RouterProvider router={router} />
 			</Provider>
 		</QueryClientProvider>

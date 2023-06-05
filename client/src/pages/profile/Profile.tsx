@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	NavLink,
-	Outlet,
-	RouterProvider,
-	createBrowserRouter,
-} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { RxExit } from 'react-icons/rx';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsPerson, BsKey } from 'react-icons/bs';
@@ -14,12 +9,7 @@ import { ProfileDetails } from './ProfileDetails';
 import { hideHeader, showHeader } from '../../store/displayStore';
 import profilePicture from './../../assets/temp-profile.png';
 import classes from './Profile.module.scss';
-import {
-	RootState,
-	hideProfileForm,
-	setProfile,
-	showProfileForm,
-} from '../../store';
+import { RootState, hideProfileForm, setProfile } from '../../store';
 import { ProfileForm } from '.';
 
 type UserDetails = {
