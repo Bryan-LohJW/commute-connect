@@ -6,24 +6,6 @@
 
 	width: 100%;
 
-	.sidebar {
-		display: flex;
-		flex-direction: column;
-
-		width: 400px;
-		height: 100%;
-		.profile-picture-wrap {
-			padding: 5rem 0;
-			margin: 0 auto;
-
-			.profile-picture {
-				width: 50%;
-				margin: auto auto;
-				display: block;
-				border-radius: 9999px;
-			}
-		}
-
 		.links {
 			.navlink {
 				display: flex;

@@ -1,0 +1,48 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+
+	width: 400px;
+	height: 100%;
+	.profile-picture-wrap {
+		padding: 5rem 0;
+		margin: 0 auto;
+
+		.profile-picture {
+			width: 50%;
+			margin: auto auto;
+			display: block;
+			border-radius: 9999px;
+		}
+	}
+
+	.links {
+		.navlink {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+
+			padding: 1rem 1rem;
+
+			text-decoration: none;
+			color: $primary;
+			background-color: $secondary;
+			.icon {
+				font-size: xx-large;
+			}
+
+			.nav-label {
+				font-size: large;
+				font-weight: 600;
+			}
+		}
+
+		.active {
+			color: $secondary;
+			background-color: $primary;
+		}
+	}
+}
