@@ -8,6 +8,8 @@ type ProfileState = {
 	interests: string[] | null;
 	occupation: string | null;
 	aboutMe: string | null;
+	editProfilePicture: boolean;
+	profilePictureURI: string | null;
 };
 
 export type Profile = {
@@ -19,6 +21,10 @@ export type Profile = {
 	aboutMe: string | null;
 };
 
+type ProfileUri = {
+	uri: string;
+};
+
 const initialState: ProfileState = {
 	editProfile: false,
 	name: null,
@@ -27,6 +33,8 @@ const initialState: ProfileState = {
 	interests: null,
 	occupation: null,
 	aboutMe: null,
+	editProfilePicture: false,
+	profilePictureURI: null,
 };
 
 export const profileSlice = createSlice({
@@ -55,10 +63,26 @@ export const profileSlice = createSlice({
 			state.occupation = initialState.occupation;
 			state.aboutMe = initialState.aboutMe;
 		},
+		showProfilePictureForm: (state) => {
+			state.editProfilePicture = true;
+		},
+		hideProfilePictureForm: (state) => {
+			state.editProfilePicture = false;
+		},
+		setProfilePictureURI: (state, action: PayloadAction<string | null>) => {
+			state.profilePictureURI = action.payload;
+		},
 	},
 });
 
-export const { showProfileForm, hideProfileForm, setProfile, clearProfile } =
-	profileSlice.actions;
+export const {
+	showProfileForm,
+	hideProfileForm,
+	setProfile,
+	clearProfile,
+	showProfilePictureForm,
+	hideProfilePictureForm,
+	setProfilePictureURI,
+} = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

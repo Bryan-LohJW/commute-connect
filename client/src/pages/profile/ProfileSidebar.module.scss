@@ -7,15 +7,54 @@
 
 	width: 400px;
 	height: 100%;
+
 	.profile-picture-wrap {
 		padding: 5rem 0;
-		margin: 0 auto;
 
-		.profile-picture {
+		.profile-overlay {
+			position: relative;
+			height: fit-content;
 			width: 50%;
-			margin: auto auto;
-			display: block;
+			margin: 0 auto;
+
 			border-radius: 9999px;
+			overflow: hidden;
+
+			.profile-picture {
+				width: 100%;
+				border-radius: 9999px;
+			}
+
+			.change-picture {
+				position: absolute;
+				bottom: 0%;
+				left: 50%;
+				transform: translateX(-50%);
+				height: 35%;
+				width: 100%;
+				background-color: rgba(100, 100, 100, 0.5);
+				opacity: 0;
+				transition: 0.2s ease;
+
+				.change-picture-icon {
+					height: 100%;
+					width: 100%;
+					color: black;
+					opacity: 0;
+					transition: 0.2s ease;
+				}
+			}
+		}
+
+		.profile-overlay:hover {
+			.change-picture {
+				opacity: 1;
+				background-color: rgba(50, 50, 50, 0.3);
+
+				.change-picture-icon {
+					opacity: 1;
+				}
+			}
 		}
 	}
 
@@ -45,4 +84,8 @@
 			background-color: $primary;
 		}
 	}
+}
+
+.pointer {
+	cursor: pointer;
 }
