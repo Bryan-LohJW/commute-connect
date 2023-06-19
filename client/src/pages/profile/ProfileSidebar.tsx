@@ -5,7 +5,7 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { BsPerson, BsKey } from 'react-icons/bs';
 import { BiPlusCircle } from 'react-icons/bi';
 
-import profilePicture from './../../assets/temp-profile.png';
+import defaultProfilePicture from './../../assets/temp-profile.png';
 import { RootState, showProfilePictureForm } from '../../store';
 import { ProfilePictureForm } from './ProfilePictureForm';
 import classes from './ProfileSidebar.module.scss';
@@ -13,6 +13,9 @@ import classes from './ProfileSidebar.module.scss';
 export const ProfileSidebar = () => {
 	const showForm = useSelector(
 		(state: RootState) => state.profile.editProfilePicture
+	);
+	const profilePicture = useSelector(
+		(state: RootState) => state.profile.profilePictureURI
 	);
 	const dispatch = useDispatch();
 
@@ -27,7 +30,7 @@ export const ProfileSidebar = () => {
 					}}
 				>
 					<img
-						src={profilePicture}
+						src={profilePicture || defaultProfilePicture}
 						alt="profile picture"
 						className={`${classes['profile-picture']} ${classes.pointer}`}
 					/>

@@ -1,7 +1,7 @@
 import { IoCloseSharp } from 'react-icons/io5';
 
 import profilePicture from './../../assets/temp-profile.png';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	setProfilePictureURI,
@@ -16,6 +16,8 @@ export const ProfilePictureForm = () => {
 	const profilePictureURI = useSelector(
 		(state: RootState) => state.profile.profilePictureURI
 	);
+	const [tempProfilePictureURI, setTempProfilePictureURI] =
+		useState(profilePictureURI);
 	const profilePictureInputRef = useRef<HTMLInputElement>(null);
 	const profilePictureResetRef = useRef<HTMLInputElement>(null);
 	const outsideClickRef = useOutsideClick(() =>
@@ -31,16 +33,16 @@ export const ProfilePictureForm = () => {
 				</p>
 			</div>
 			<div className={classes.profilePictureWrap}>
-				{!profilePictureURI && (
+				{!tempProfilePictureURI && (
 					<img
 						src={profilePicture}
 						alt="default profile picture"
 						className={classes['profile-picture']}
 					/>
 				)}
-				{profilePictureURI && (
+				{tempProfilePictureURI && (
 					<img
-						src={profilePictureURI}
+						src={tempProfilePictureURI}
 						alt="profile picture"
 						className={classes['profile-picture']}
 					/>
@@ -55,13 +57,10 @@ export const ProfilePictureForm = () => {
 						ref={profilePictureInputRef}
 						accept="image/png, image/jpeg, image/jpg"
 						onChange={(event) => {
-							console.log(event.currentTarget.value);
 							if (event.currentTarget.files === null) return;
-							dispatch(
-								setProfilePictureURI(
-									URL.createObjectURL(
-										event.currentTarget.files[0]
-									)
+							setTempProfilePictureURI(
+								URL.createObjectURL(
+									event.currentTarget.files[0]
 								)
 							);
 						}}
@@ -83,14 +82,22 @@ export const ProfilePictureForm = () => {
 						onClick={() => {
 							if (!profilePictureResetRef.current) return;
 							profilePictureResetRef.current.click();
-							dispatch(setProfilePictureURI(null));
+							setTempProfilePictureURI(null);
 						}}
 						className={classes['button-secondary']}
 					>
 						Delete
 					</button>
 				</div>
-				<button className={classes['button-primary']}>Save</button>
+				<button
+					className={classes['button-primary']}
+					onClick={() => {
+						dispatch(setProfilePictureURI(tempProfilePictureURI));
+						dispatch(hideProfilePictureForm());
+					}}
+				>
+					Save
+				</button>
 			</div>
 		</div>
 	);
