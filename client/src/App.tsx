@@ -1,14 +1,18 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
-import { Landing } from './pages';
+import { Landing, Profile } from './pages';
 import { Overlay } from './components';
 import { store } from './store';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
 	{
 		element: <Overlay />,
-		children: [{ path: '/', element: <Landing /> }],
+		children: [
+			{ path: '/', element: <Landing /> },
+			{ path: '/profile', element: <Profile /> },
+		],
 	},
 ]);
 
@@ -18,7 +22,8 @@ const App = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Provider store={store}>
-				<RouterProvider router={router} />;
+				<Toaster />
+				<RouterProvider router={router} />
 			</Provider>
 		</QueryClientProvider>
 	);

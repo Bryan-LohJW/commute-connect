@@ -11,10 +11,11 @@ import { useOutsideClick } from '../../hooks';
 import { hideLogin, showSignUp, login as storeLogin } from '../../store';
 import logo from '/src/assets/logo-light.png';
 import classes from './LoginForm.module.scss';
+import toast from 'react-hot-toast';
 
 const schema = z.object({
 	email: z.string().email('Invalid email'),
-	password: z.string().min(8, 'Password is too short'),
+	password: z.string().min(8, 'At least 8 characters'),
 });
 
 type LoginInput = {
@@ -67,6 +68,15 @@ export const LoginForm = () => {
 				token: data['access_token'],
 			})
 		);
+		toast('Successfully logged in', {
+			position: 'top-center',
+			style: {
+				backgroundColor: '#73c2fb',
+				color: '#ffffff',
+				padding: '1rem',
+				fontWeight: 'bolder',
+			},
+		});
 		return data;
 	};
 

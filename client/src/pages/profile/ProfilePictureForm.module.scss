@@ -1,0 +1,83 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+
+.modal {
+	z-index: 1;
+	position: fixed;
+	top: 4rem;
+	left: 50%;
+	transform: translateX(-50%);
+
+	max-width: 774px;
+	width: 100%;
+	height: fit-content;
+	padding: 1rem 1.5rem;
+	border-radius: 0.5rem;
+	background-color: white;
+	border: 3px solid black;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		color: white;
+
+		.title {
+			color: black;
+			font-size: larger;
+			font-weight: 700;
+		}
+
+		.icon {
+			color: black;
+			height: 1.5rem;
+			width: 1.5rem;
+		}
+	}
+
+	.profilePictureWrap {
+		width: 100%;
+		padding: 2rem 0;
+		display: flex;
+		justify-content: center;
+
+		.profile-picture {
+			width: 35%;
+			aspect-ratio: 1;
+			border-radius: 9999px;
+			object-fit: cover;
+			overflow: hidden;
+
+			border: 2px solid black;
+		}
+	}
+
+	.footer {
+		display: flex;
+		justify-content: space-between;
+		color: white;
+
+		.sub-footer {
+			display: flex;
+			gap: 1rem;
+		}
+
+		.button-primary {
+			@extend %button;
+			border-radius: 0;
+			&:hover {
+				@extend %button-hover;
+			}
+			@include button-theme($primary, $secondary);
+		}
+
+		.button-secondary {
+			@extend %button;
+			border-radius: 0;
+			&:hover {
+				@extend %button-hover;
+			}
+			@include button-theme($secondary, $primary);
+			border: 3px solid $primary;
+		}
+	}
+}

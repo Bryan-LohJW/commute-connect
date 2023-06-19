@@ -1,0 +1,94 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/styles.scss';
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+
+	width: 400px;
+	height: 100%;
+
+	.profile-picture-wrap {
+		padding: 5rem 0;
+
+		.profile-overlay {
+			position: relative;
+			height: fit-content;
+			width: 50%;
+			margin: 0 auto;
+
+			border-radius: 9999px;
+			overflow: hidden;
+			border: 2px solid black;
+
+			.profile-picture {
+				width: 100%;
+				aspect-ratio: 1;
+				object-fit: cover;
+				overflow: hidden;
+			}
+
+			.change-picture {
+				position: absolute;
+				bottom: 0%;
+				left: 50%;
+				transform: translateX(-50%);
+				height: 35%;
+				width: 100%;
+				background-color: rgba(100, 100, 100, 0.5);
+				opacity: 0;
+				transition: 0.2s ease;
+
+				.change-picture-icon {
+					height: 100%;
+					width: 100%;
+					color: black;
+					opacity: 0;
+					transition: 0.2s ease;
+				}
+			}
+		}
+
+		.profile-overlay:hover {
+			.change-picture {
+				opacity: 1;
+				background-color: rgba(50, 50, 50, 0.3);
+
+				.change-picture-icon {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.links {
+		.navlink {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+
+			padding: 1rem 1rem;
+
+			text-decoration: none;
+			color: $primary;
+			background-color: $secondary;
+			.icon {
+				font-size: xx-large;
+			}
+
+			.nav-label {
+				font-size: large;
+				font-weight: 600;
+			}
+		}
+
+		.active {
+			color: $secondary;
+			background-color: $primary;
+		}
+	}
+}
+
+.pointer {
+	cursor: pointer;
+}

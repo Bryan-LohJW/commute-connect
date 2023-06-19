@@ -1,5 +1,6 @@
 package com.bryan.commuteconnect.auth;
 
+import com.bryan.commuteconnect.auth.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,10 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticateRequest request) {
         return service.authenticate(request);
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<ChangePasswordResponse> changePassword(@RequestBody ChangePasswordRequest request) throws Exception {
+        return ResponseEntity.ok(service.changePassword(request));
     }
 }
